@@ -291,7 +291,7 @@ contexts:
     - match: \{
       scope: punctuation.section.block.begin.just
       push: if-else-block-body
-    - match: '!=|==|=~'
+    - match: '!=|==|=~|!~'
       scope: keyword.operator.comparison.just
     - include: just-expressions
     - include: else-pop

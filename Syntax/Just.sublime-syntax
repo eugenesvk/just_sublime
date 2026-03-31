@@ -112,9 +112,13 @@ variables:
       allow-duplicate-recipes
     | allow-duplicate-variables
     | dotenv-load
+    | dotenv-override
+    | dotenv-required
     | export
     | fallback
+    | guards
     | ignore-comments
+    | lazy
     | positional-arguments
     | quiet
     | unstable
@@ -152,9 +156,12 @@ variables:
   recipe_attributes_arguments: |-
     (?x:
       confirm
+    | default
     | doc
     | extension
     | group
+    | metadata
+    | parallel
     | script
     | working-directory
     )

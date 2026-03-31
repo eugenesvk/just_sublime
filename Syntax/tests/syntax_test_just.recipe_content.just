@@ -77,6 +77,22 @@ d:
 # ^ storage.modifier.ignore-error.just
 #  ^ storage.modifier.quiet.just
 
+e:
+  ?@echo "hi"
+# ^ storage.modifier.exit-if-one.just
+#  ^ storage.modifier.quiet.just
+
+# ? and - cannot be used together
+f:
+  ?-echo "hi"
+# ^^ invalid.illegal.just
+
+# Duplicates are sent to the shell, which will be invalid
+g:
+  @@echo "hi"
+# ^^ invalid.illegal.just
+
+
 line-prefix-for-default-shell-only:
   #!/usr/bin/sh
   -echo "hi"

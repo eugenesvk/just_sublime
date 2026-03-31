@@ -631,14 +631,33 @@ contexts:
       pop: 1
 
   recipe-content-modifiers:
-    - match: ^\s+((@)|(-)(@)|(-)|(@)(-))(?!-)
+    - match: |
+        (?x)                   # Allow whitespace/comments in regex for clarity
+        (?:
+          (@)(\?)              # @?
+          | (\?)(@)            # ?@
+          | (@)(-)             # @-
+          | (-)(@)             # -@
+          | (@)                # @ alone
+          | (-)                # - alone
+          | (\?)               # ? alone
+          | ([-\?@]+)          # Any other combinations are invalid
+        )
+        (?![-?@])               # Ensure no more modifiers follow (prevents --- or ??)
       captures:
-        2: storage.modifier.quiet.just
-        3: storage.modifier.ignore-error.just
+        1: storage.modifier.quiet.just
+        2: storage.modifier.exit-if-one.just
+        3: storage.modifier.exit-if-one.just
         4: storage.modifier.quiet.just
-        5: storage.modifier.ignore-error.just
-        6: storage.modifier.quiet.just
+        5: storage.modifier.quiet.just
+        6: storage.modifier.ignore-error.just
         7: storage.modifier.ignore-error.just
+        8: storage.modifier.quiet.just
+        9: storage.modifier.quiet.just
+        10: storage.modifier.ignore-error.just
+        11: storage.modifier.exit-if-one.just
+        12: invalid.illegal.just
+      pop: 1 # Only consume the first run of space-separated sigil characters
     - include: else-pop
 
   recipe-content-interpolations:

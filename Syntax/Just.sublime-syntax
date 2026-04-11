@@ -141,12 +141,14 @@ variables:
   recipe_attributes_bare: |-
     (?x:
       confirm
+    | default
     | linux
     | macos
     | no-cd
     | no-exit-message
     | no-quiet
     | openbsd
+    | parallel
     | positional-arguments
     | private
     | script
@@ -155,13 +157,10 @@ variables:
     )
   recipe_attributes_arguments: |-
     (?x:
-      confirm
-    | default
-    | doc
+      doc
     | extension
     | group
     | metadata
-    | parallel
     | script
     | working-directory
     )

@@ -333,8 +333,15 @@ contexts:
 ###[ CHARACTERS ]##############################################################
 
   all-strings:
+    - include: format-strings
     - include: quoted-strings
     - include: backtick-strings
+
+  format-strings:
+    - include: format-single-quote-block-strings
+    - include: format-single-quote-strings
+    - include: format-double-quote-block-strings
+    - include: format-double-quote-strings
 
   quoted-strings:
     - include: single-quote-block-strings
@@ -345,6 +352,71 @@ contexts:
   backtick-strings:
     - include: backtick-quote-block-strings
     - include: backtick-quote-strings
+
+
+  format-double-quote-block-strings:
+    - match: 'f"""'
+      scope: punctuation.definition.string.begin.just
+      push:
+        - meta_scope: meta.string.just string.quoted.double.block.just
+        - meta_include_prototype: false
+        - match: \\.
+          scope: constant.character.escape.just
+        - match: '"""'
+          scope: punctuation.definition.string.end.just
+          pop: 1
+        - include: format-string-interpolations
+
+  format-double-quote-strings:
+    - match: 'f"'
+      scope: punctuation.definition.string.begin.just
+      push:
+        - meta_scope: meta.string.just string.quoted.double.just
+        - meta_include_prototype: false
+        - match: \\.
+          scope: constant.character.escape.just
+        - match: '"'
+          scope: punctuation.definition.string.end.just
+          pop: 1
+        - include: format-string-interpolations
+
+  format-single-quote-block-strings:
+    - match: "f'''"
+      scope: punctuation.definition.string.begin.just
+      push:
+        - meta_scope: meta.string.just string.quoted.single.block.just
+        - meta_include_prototype: false
+        - match: "'''"
+          scope: punctuation.definition.string.end.just
+          pop: 1
+        - include: format-string-interpolations
+
+  format-single-quote-strings:
+    - match: "f'"
+      scope: punctuation.definition.string.begin.just
+      push:
+        - meta_scope: meta.string.just string.quoted.single.just
+        - meta_include_prototype: false
+        - match: "'"
+          scope: punctuation.definition.string.end.just
+          pop: 1
+        - include: format-string-interpolations
+
+  format-string-interpolations:
+    - match: \{\{\{\{
+      scope: constant.character.escape.just
+      comment: Escaped double brace - literal {{ in output
+    - match: \{\{(?!\{)
+      scope: punctuation.section.interpolation.begin.just
+      push: format-string-interpolation-body
+
+  format-string-interpolation-body:
+    - clear_scopes: 1
+    - meta_scope: meta.interpolation.just
+    - match: \}\}
+      scope: punctuation.section.interpolation.end.just
+      pop: 1
+    - include: just-expressions
 
 
   backtick-quote-block-strings:

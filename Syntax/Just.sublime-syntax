@@ -158,6 +158,7 @@ variables:
   recipe_attributes_arguments: |-
     (?x:
       doc
+    | env
     | extension
     | group
     | metadata

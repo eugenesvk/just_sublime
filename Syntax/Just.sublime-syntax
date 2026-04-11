@@ -142,8 +142,11 @@ variables:
     (?x:
       confirm
     | default
+    | dragonfly
+    | freebsd
     | linux
     | macos
+    | netbsd
     | no-cd
     | no-exit-message
     | no-quiet
@@ -157,7 +160,8 @@ variables:
     )
   recipe_attributes_arguments: |-
     (?x:
-      doc
+      confirm
+    | doc
     | env
     | extension
     | group

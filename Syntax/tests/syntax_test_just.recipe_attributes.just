@@ -94,3 +94,83 @@ tmp-dir-invalid:
 #                                         ^ variable.annotation.just
 doit:
   @echo "done"
+
+[default]
+#<- meta.sequence.list.just meta.annotation.just
+#^^^^^^^^ meta.sequence.list.just meta.annotation.just
+def:
+
+[arg("name")]
+#^^^^^^^^^^^^ meta.sequence.list.just meta.annotation.just
+#   ^ punctuation.definition.annotation.begin.just
+#    ^ string.quoted.double.just punctuation.definition.string.begin.just
+#     ^^^^ string.quoted.double.just
+#         ^ string.quoted.double.just punctuation.definition.string.end.just
+#          ^ punctuation.definition.annotation.end.just
+#           ^ variable.annotation.just
+arg-positional-only:
+
+[arg("name", help="Show this help")]
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.sequence.list.just meta.annotation.just
+#          ^ punctuation.separator.parameters.just
+#            ^^^^ variable.parameter.just
+#                ^ keyword.operator.assignment.just
+#                 ^^^^^^^^^^^^^^^^ string.quoted.double.just
+arg-with-help:
+
+[arg("name", short="n", long="name")]
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.sequence.list.just meta.annotation.just
+#            ^^^^^ variable.parameter.just
+#                 ^ keyword.operator.assignment.just
+#                  ^^^ string.quoted.double.just
+#                       ^^^^ variable.parameter.just
+#                            ^^^^^^ string.quoted.double.just
+arg-with-short-and-long:
+
+[arg("name", help="Desc", short="n", long="name", pattern=".*", value="VAL")]
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.sequence.list.just meta.annotation.just
+#                                                               ^^^^^ variable.parameter.just
+#                                                                    ^ keyword.operator.assignment.just
+#                                                                     ^ string.quoted.double.just punctuation.definition.string.begin.just
+#                                                                      ^^^ string.quoted.double.just
+#                                                                         ^ string.quoted.double.just punctuation.definition.string.end.just
+#                                                                          ^ punctuation.definition.annotation.end.just
+#                                                                           ^ variable.annotation.just
+arg-all-kwargs:
+
+[arg("name", help='''
+#                 ^^^ string.quoted.single.block.just punctuation.definition.string.begin.just
+multiline
+#^^^^^^^^ string.quoted.single.block.just
+''')]
+#<- string.quoted.single.block.just punctuation.definition.string.end.just
+#^^ string.quoted.single.block.just punctuation.definition.string.end.just
+#  ^ punctuation.definition.annotation.end.just
+#   ^ variable.annotation.just
+arg-multiline-help:
+
+[arg("name", unknown="x")]
+#            ^^^^^^^ invalid.illegal.just
+arg-invalid-kwarg:
+
+[no-cd, arg("verbose", short="v"), linux]
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.sequence.list.just meta.annotation.just
+#       ^^^ variable.annotation.just
+#          ^ punctuation.definition.annotation.begin.just
+#           ^ string.quoted.double.just punctuation.definition.string.begin.just
+#            ^^^^^^^^ string.quoted.double.just
+#                    ^ punctuation.separator.parameters.just
+#                      ^^^^^ variable.parameter.just
+#                           ^ keyword.operator.assignment.just
+#                            ^ string.quoted.double.just punctuation.definition.string.begin.just
+#                             ^ string.quoted.double.just
+#                              ^ string.quoted.double.just punctuation.definition.string.end.just
+#                               ^ punctuation.definition.annotation.end.just
+#                                ^ punctuation.separator.parameters.just
+#                                  ^^^^^ variable.annotation.just
+arg-mixed-with-other-attrs:
+
+[arg("name", long=f"nope")]
+#                 ^^ invalid.illegal.just
+#                   ^^^^^ - string.quoted.double.just
+arg-f-strings-invalid-arg:

@@ -164,6 +164,8 @@ variables:
     | script
     | working-directory
     )
+  arg_attribute_kwargs: |-
+    (?x: help | long | pattern | short | value )
 
 ###############################################################################
 # MAIN CONTEXT
@@ -538,6 +540,9 @@ contexts:
     - include: eol-pop
 
   expect-recipe-attribute-name:
+    - match: arg\b
+      scope: variable.annotation.just
+      set: arg-attribute
     - match: ({{recipe_attributes_arguments}})
       scope: variable.annotation.just
       set: recipe-attribute-argument
@@ -571,6 +576,47 @@ contexts:
     - include: quoted-strings
 
   recipe-attribute-argument-colon-body:
+    - match: '`'
+      scope: invalid.illegal.just
+      pop: 1
+    - include: quoted-strings
+    - include: else-pop
+
+  arg-attribute:
+    - match: \(
+      scope: punctuation.definition.annotation.begin.just
+      set: arg-attribute-paren-body
+    - include: else-pop
+
+  arg-attribute-paren-body:
+    - match: \)
+      scope: punctuation.definition.annotation.end.just
+      pop: 1
+    - match: ','
+      scope: punctuation.separator.parameters.just
+      push: arg-attribute-kwarg
+    - match: '`'
+      scope: invalid.illegal.just
+      pop: 1
+    - match: f['"]
+      scope: invalid.illegal.just
+      pop: 1
+    - include: quoted-strings
+
+  arg-attribute-kwarg:
+    - match: '({{arg_attribute_kwargs}})\s*(=)'
+      captures:
+        1: variable.parameter.just
+        2: keyword.operator.assignment.just
+      set: arg-attribute-kwarg-value
+    - match: '({{valid_name}})\s*(=)'
+      captures:
+        1: invalid.illegal.just
+        2: keyword.operator.assignment.just
+      set: arg-attribute-kwarg-value
+    - include: else-pop
+
+  arg-attribute-kwarg-value:
     - match: '`'
       scope: invalid.illegal.just
       pop: 1

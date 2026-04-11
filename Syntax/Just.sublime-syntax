@@ -210,7 +210,7 @@ contexts:
         2: meta.generic-name.just
 
   modules:
-    - match: ^(mod)(\??)(\s+\w+)
+    - match: ^(mod)(\??)\s+({{valid_name}})
       scope: meta.statement.mod.just
       captures:
         1: keyword.control.import.just

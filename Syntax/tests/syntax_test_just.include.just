@@ -20,5 +20,12 @@ mod foo2 'somewhere/else' # comment
 #        ^ string.quoted.single.just punctuation.definition.string.begin.just
 #         ^^^^^^^^^^^^^^^ string.quoted.single.just
 
+mod foo3 f'fail{{}}'
+#        ^^ invalid.illegal.just
+
+mod? foo4 """testme"""
+#    ^^^^ meta.statement.mod.just meta.generic-name.just
+#         ^^^^^^^^^^^^ string.quoted.double.block.just
+
 mod a `yes`
 #     ^ invalid.illegal.just

@@ -220,10 +220,17 @@ contexts:
         1: keyword.control.import.just
         2: keyword.operator.assignment.just
         3: meta.generic-name.just
+      push: module-path
+
+  module-path:
+    - match: f['"]
+      scope: invalid.illegal.just
+      pop: 1
     - match: '`'
       scope: invalid.illegal.just
-      pop: 2
+      pop: 1
     - include: quoted-strings
+    - include: eol-pop
 
 ###[ ALIASES ]#################################################################
 
